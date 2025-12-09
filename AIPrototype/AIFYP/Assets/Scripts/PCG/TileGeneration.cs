@@ -27,6 +27,12 @@ public class TileGeneration : MonoBehaviour
 
     [SerializeField] private AnimationCurve heightCurve;
 
+    [SerializeField] private GameObject[] forest;
+    [SerializeField] private GameObject[] mountains;
+
+    [SerializeField]
+    private Wave[] waves;
+
     private void Start()
     {
         GenerateTile();
@@ -39,10 +45,14 @@ public class TileGeneration : MonoBehaviour
         int tileDepth = (int)Mathf.Sqrt(meshVertices.Length);
         int tileWidth = tileDepth;
         // calculate the offsets based on the tile position
-        float[,] heightMap = this.noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale);
+        float offsetX = -this.gameObject.transform.position.x;
+        float offsetZ = -this.gameObject.transform.position.z;
         // generate a heightMap using noise
+        float[,] heightMap = this.noiseMapGeneration.GenerateNoiseMap(tileDepth, tileWidth, this.mapScale, offsetX, offsetZ, waves);
+        // build a Texture2D from the height map
         Texture2D tileTexture = BuildTexture(heightMap);
         this.tileRenderer.material.mainTexture = tileTexture;
+        // update the tile mesh vertices according to the height map
         UpdateMeshVertices(heightMap);
     }
 
@@ -101,6 +111,25 @@ public class TileGeneration : MonoBehaviour
                 Vector3 vertex = meshVertices[vertexIndex];
                 // change the vertex Y coordinate, proportional to the height value. The height value is evaluated by the heightCurve function, in order to correct it.
                 meshVertices[vertexIndex] = new Vector3(vertex.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, vertex.z);
+                int chance = Random.Range(0, 100);
+                if (this.heightCurve.Evaluate(height) <= 0.1 && this.heightCurve.Evaluate(height) >= 0.08)
+                {
+                    if (chance <= 25)
+                    {
+                        GameObject thisObject = forest[Random.Range(0, forest.Length - 1)];
+                        thisObject = Instantiate(thisObject, vertex, Quaternion.identity);
+                        thisObject.transform.position = new Vector3(thisObject.transform.position.x + transform.position.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, thisObject.transform.position.z + transform.position.z);
+                    }
+                }
+                if(this.heightCurve.Evaluate(height) <= 0.4 && this.heightCurve.Evaluate(height) >= 0.1)
+                {
+                    if(chance <= 1)
+                    {
+                        GameObject thisMountain = mountains[Random.Range(0, mountains.Length - 1)];
+                        thisMountain = Instantiate(thisMountain, vertex, Quaternion.identity);
+                        thisMountain.transform.position = new Vector3(thisMountain.transform.position.x + transform.position.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, thisMountain.transform.position.z + transform.position.z);
+                    }
+                }
                 vertexIndex++;
             }
         }
