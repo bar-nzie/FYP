@@ -21,6 +21,6 @@ public class ChaseAction : GoapAction
 
     public override bool IsDone()
     {
-        return Vector3.Distance(transform.position, agentRef.transform.position) < agentRef.attackRange;
+        return Vector3.Distance(transform.position, agentRef.transforms.transform.position) < agentRef.attackRange;
     }
 }
