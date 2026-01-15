@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class LevelGeneration : MonoBehaviour
@@ -6,10 +8,25 @@ public class LevelGeneration : MonoBehaviour
     private int mapWidthInTiles, mapDepthInTiles;
     [SerializeField]
     private GameObject tilePrefab;
+    [SerializeField]
+    private NavMeshSurface navMeshSurface;
+    public GameObject enemy;
     void Start()
     {
         GenerateMap();
+
+        StartCoroutine(Delay());
     }
+
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(3);
+
+        navMeshSurface.BuildNavMesh();
+
+        SpawnEnemies();
+    }
+
     void GenerateMap()
     {
         // get the tile dimensions from the tile Prefab
@@ -29,5 +46,10 @@ public class LevelGeneration : MonoBehaviour
                 GameObject tile = Instantiate(tilePrefab, tilePosition, Quaternion.identity) as GameObject;
             }
         }
+    }
+
+    void SpawnEnemies()
+    {
+        Instantiate(enemy, new Vector3(50, 10, 50), Quaternion.identity);
     }
 }
