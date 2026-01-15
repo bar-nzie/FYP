@@ -18,7 +18,7 @@ public class PatrolAction : GoapAction
         {
             Debug.Log("Patrolling inside");
             Vector3 random = Random.insideUnitSphere * 10f;
-            random += agent.transform.position;
+            random += agent.transform.position; 
 
             NavMeshHit hit;
             NavMesh.SamplePosition(random, out hit, 10f, NavMesh.AllAreas);
@@ -31,8 +31,9 @@ public class PatrolAction : GoapAction
 
     public override bool IsDone()
     {
-        if(Vector3.Distance(transform.position, target) < 1f)
+        if(Vector3.Distance(transform.position, target) < 2f)
         {
+            Debug.Log("Reached Location");
             target = Vector3.zero;
             return true;
         }

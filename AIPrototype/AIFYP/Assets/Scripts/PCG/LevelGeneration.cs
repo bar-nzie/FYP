@@ -50,6 +50,6 @@ public class LevelGeneration : MonoBehaviour
 
     void SpawnEnemies()
     {
-        Instantiate(enemy, new Vector3(50, 10, 50), Quaternion.identity);
+        Instantiate(enemy, new Vector3(115, 10, 115), Quaternion.identity);
     }
 }
