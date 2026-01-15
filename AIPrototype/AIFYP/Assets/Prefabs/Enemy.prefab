@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5998599687991293672}
   - component: {fileID: 6924358619744532351}
   - component: {fileID: 8838993674322545249}
-  - component: {fileID: 6037661019325621052}
   - component: {fileID: 3962450985119869425}
   - component: {fileID: -6201177662944089256}
   - component: {fileID: -3219861842842196858}
@@ -114,33 +113,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &6037661019325621052
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191950389481190254}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &3962450985119869425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: -3219861842842196858}
-  player: {fileID: 0}
+  transforms: {fileID: 0}
   attackRange: 5
 --- !u!195 &-3219861842842196858
 NavMeshAgent:

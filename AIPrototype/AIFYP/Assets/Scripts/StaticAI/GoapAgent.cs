@@ -41,11 +41,24 @@ public class GoapAgent : MonoBehaviour
 
     void MakePlan()
     {
-        var goal = new Dictionary<string, bool>
+        Dictionary<string, bool> goal;
+
+        if (world.Get("playerVisible"))
         {
-            { "playerVisible", true },
-            { "inAttackRange", true }
-        };
+            goal = new Dictionary<string, bool>()
+            {
+                { "playerVisible", true },
+                { "inAttackRange", true }
+            };
+        }
+        else
+        {
+            goal = new Dictionary<string, bool>()
+            {
+                { "isAtPatrolPoint", true }
+            };
+        }
+
         currentPlan = planner.Plan(actions, world.GetStates(), goal);
     }
 

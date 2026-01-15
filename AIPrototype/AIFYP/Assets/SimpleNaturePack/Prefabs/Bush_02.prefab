@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2930868993298005286}
   - component: {fileID: 1178827977748257652}
   - component: {fileID: 8862005176115341676}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush_02_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 3777348999397856040}
   - component: {fileID: 2835129044729284803}
   - component: {fileID: 2514207275634370509}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush_02_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 0.4, y: 0.49473736, z: 0.4}
   m_Center: {x: 0, y: 0.23171104, z: 0}
@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 6239969156481072347}
   - component: {fileID: 5531866383690190313}
   - component: {fileID: -4667952367728104602}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bush_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6239969156481229051}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.5, z: 0.5}
