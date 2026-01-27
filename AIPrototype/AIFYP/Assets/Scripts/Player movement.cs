@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Playermovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float speed = 6f;
     public float gravity = -9.8f;
     public float jumpHeight = 1.5f;
 
@@ -12,7 +12,23 @@ public class Playermovement : MonoBehaviour
     public float mouseSensitivity = 100f;
     public Transform cameraHolder;
 
-    [Header]
+    [Header("Ground Check")]
+    public Transform groundCheck;
+    public float groundDistance = 0.4f;
+    public LayerMask groundMask;
+
+    [Header("Sprint")]
+    public float walkSpeed = 6f;
+    public float sprintSpeed = 10f;
+    public float stamina = 5f;
+    public float maxStamina = 5f;
+    public float staminaDrain = 1f;
+    public float staminaRegen = 0.8f;
+    public Image staminaFill;
+
+    private bool isSprinting;
+
+    private bool isGrounded;
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -47,21 +63,35 @@ public class Playermovement : MonoBehaviour
     {
         Move();
         MouseLook();
+        UpdateUI();
     }
 
     void Move()
     {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         Vector2 input = inputActions.Player.Move.ReadValue<Vector2>();
 
-        Vector3 move = transform.right * input.x + transform.forward * input.y;
-        controller.Move(move * speed * Time.deltaTime);
+        float currentSpeed = walkSpeed;
 
-        if (controller.isGrounded && velocity.y < 0)
+        if (inputActions.Player.Sprint.IsPressed() && stamina > 0f && input.y > 0)
+        {
+            currentSpeed = sprintSpeed;
+            stamina -= staminaDrain * Time.deltaTime;
+        }
+        else
+        {
+            stamina += staminaRegen * Time.deltaTime;
+        }
+
+        Vector3 move = transform.right * input.x + transform.forward * input.y;
+        controller.Move(move * currentSpeed * Time.deltaTime);
+
+        if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
-        if (inputActions.Player.Jump.WasPressedThisFrame() && controller.isGrounded)
+        if (inputActions.Player.Jump.WasPressedThisFrame() && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
@@ -82,5 +112,18 @@ public class Playermovement : MonoBehaviour
 
         cameraHolder.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
+    }
+
+    void UpdateUI()
+    {
+        staminaFill.fillAmount = stamina / maxStamina;
     }
 }
