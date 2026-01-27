@@ -211,6 +211,15 @@ MonoBehaviour:
   - {fileID: 7405846476849542632, guid: c6308cb7062fac34e8e50600086b12a1, type: 3}
   - {fileID: 5202732821079448320, guid: cebfacc247a640945a2c30b442202fca, type: 3}
   - {fileID: 4680757731160225450, guid: 0fde05fa0f3321942a21896ff4f0856f, type: 3}
+  buildings:
+  - {fileID: 1640908652775104, guid: cd87e5026d1695148aabe96121c526ef, type: 3}
+  - {fileID: 1275909538635612, guid: 2767c12992d890f44b14f433fe854668, type: 3}
+  - {fileID: 1232766363669618, guid: 2b519101e10d4a74580d4c86ac9e03e6, type: 3}
+  - {fileID: 1185082912798350, guid: 71442e8cd72511e4fabb72f1a2cc82dd, type: 3}
+  - {fileID: 1121113006719782, guid: 386f40ad68cdd3c4fbcb471ef2d93772, type: 3}
+  blockingLayers:
+    serializedVersion: 2
+    m_Bits: 64
   waves:
   - seed: 5613
     frequency: 1

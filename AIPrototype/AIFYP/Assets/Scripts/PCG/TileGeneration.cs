@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 
@@ -29,6 +30,9 @@ public class TileGeneration : MonoBehaviour
 
     [SerializeField] private GameObject[] forest;
     [SerializeField] private GameObject[] mountains;
+    [SerializeField] private GameObject[] buildings;
+
+    [SerializeField] private LayerMask blockingLayers;
 
     [SerializeField]
     private Wave[] waves;
@@ -130,6 +134,28 @@ public class TileGeneration : MonoBehaviour
                         thisMountain.transform.position = new Vector3(thisMountain.transform.position.x + transform.position.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, thisMountain.transform.position.z + transform.position.z);
                     }
                 }
+
+                if (this.heightCurve.Evaluate(height) < 0.08f)
+                {
+                    Vector3 worldPos = transform.TransformPoint(vertex);
+
+                    Collider[] colliders = Physics.OverlapSphere(worldPos, 30f, blockingLayers);
+                    Debug.Log(colliders.Length);
+
+                    bool isOverlapping = colliders.Length > 0;
+
+                    // If no overlap, spawn the building
+                    if (!isOverlapping)
+                    {
+                        if (chance <= 1)
+                        {
+                            GameObject building = buildings[Random.Range(0, buildings.Length)];
+                            building = Instantiate(building, vertex, Quaternion.identity);
+                            building.transform.position = new Vector3(building.transform.position.x + transform.position.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, building.transform.position.z + transform.position.z);
+                        }
+                    }
+                }
+
                 vertexIndex++;
             }
         }
