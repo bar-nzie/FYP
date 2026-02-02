@@ -137,22 +137,31 @@ public class TileGeneration : MonoBehaviour
 
                 if (this.heightCurve.Evaluate(height) < 0.08f)
                 {
-                    Vector3 worldPos = transform.TransformPoint(vertex);
+                    Vector3 worldPos = new Vector3(
+                        vertex.x + transform.position.x,
+                        this.heightCurve.Evaluate(height) * this.heightMultiplier,
+                        vertex.z + transform.position.z
+                    );
 
-                    Collider[] colliders = Physics.OverlapSphere(worldPos, 30f, blockingLayers);
-                    Debug.Log(colliders.Length);
+                    Collider[] colliders = Physics.OverlapSphere(worldPos, 1f, blockingLayers);
 
                     bool isOverlapping = colliders.Length > 0;
 
-                    // If no overlap, spawn the building
-                    if (!isOverlapping)
+                    if (!isOverlapping && chance <= 1f)
                     {
-                        if (chance <= 1)
-                        {
-                            GameObject building = buildings[Random.Range(0, buildings.Length)];
-                            building = Instantiate(building, vertex, Quaternion.identity);
-                            building.transform.position = new Vector3(building.transform.position.x + transform.position.x, this.heightCurve.Evaluate(height) * this.heightMultiplier, building.transform.position.z + transform.position.z);
-                        }
+                        GameObject buildingPrefab = buildings[Random.Range(0, buildings.Length)];
+
+                        // Get terrain normal at this vertex (approximate using mesh normals)
+                        Vector3 normal = meshFilter.mesh.normals[vertexIndex];
+
+                        // Random Y rotation
+                        float randomY = Random.Range(0f, 360f);
+
+                        // Create rotation with random Y, aligned to terrain normal
+                        Quaternion rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(buildingPrefab.transform.forward, normal), normal);
+                        rotation *= Quaternion.Euler(0f, randomY, 0f);
+
+                        GameObject building = Instantiate(buildingPrefab, worldPos, rotation);
                     }
                 }
 
