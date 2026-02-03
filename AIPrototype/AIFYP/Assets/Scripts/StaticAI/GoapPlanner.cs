@@ -39,6 +39,8 @@ public class GoapPlanner
 
         foreach (var action in actions)
         {
+            if (!action.CheckProceduralPrecondition(parent.action?.gameObject ?? null)) continue;
+
             if (!InState(action.preconditions, parent.state)) continue;
 
             var newState = new Dictionary<string, bool>(parent.state);

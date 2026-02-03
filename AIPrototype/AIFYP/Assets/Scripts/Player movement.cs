@@ -26,6 +26,15 @@ public class Playermovement : MonoBehaviour
     public float staminaRegen = 0.8f;
     public Image staminaFill;
 
+    [Header("Health")]
+    public float maxHealth = 100f;
+    public float currentHealth;
+
+    [Header("Attack")]
+    public Transform aimPivot;
+    public GameObject bulletPrefab;
+    public Camera playerCam;
+
     private bool isSprinting;
 
     private bool isGrounded;
@@ -56,6 +65,7 @@ public class Playermovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -64,6 +74,14 @@ public class Playermovement : MonoBehaviour
         Move();
         MouseLook();
         UpdateUI();
+        if(currentHealth <= 0f)
+        {
+            Destroy(this.gameObject);
+        }
+        if (inputActions.Player.Attack.WasPressedThisFrame())
+        {
+            Shoot();
+        }
     }
 
     void Move()
@@ -125,5 +143,22 @@ public class Playermovement : MonoBehaviour
     void UpdateUI()
     {
         staminaFill.fillAmount = stamina / maxStamina;
+    }
+
+    private void Shoot()
+    {
+        Ray ray = playerCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        Vector3 targetPoint;
+        targetPoint = ray.GetPoint(75);
+
+        Vector3 directionWithoutSpread = targetPoint - aimPivot.position;
+
+        GameObject currentBullet = Instantiate(bulletPrefab, aimPivot.position + directionWithoutSpread, Quaternion.LookRotation(directionWithoutSpread));
+    }
+
+    public void TakeDamage(float dmg)
+    {
+        currentHealth -= dmg;
     }
 }

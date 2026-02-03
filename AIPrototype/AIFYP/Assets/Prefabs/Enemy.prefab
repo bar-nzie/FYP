@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5867339060418807654}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,3 +191,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cost: 1
+  bullet: {fileID: 4500334078204774071, guid: b6546158e08a0c44bad55f20d5cc8584, type: 3}
+  fireRate: 0.25
