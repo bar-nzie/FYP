@@ -21,7 +21,6 @@ public class AttackState : GoapAction
 
     public override bool CheckProceduralPrecondition(GameObject agent)
     {
-        Debug.Log(lastShotTime);
         return Time.time >= lastShotTime + fireRate;
     }
 

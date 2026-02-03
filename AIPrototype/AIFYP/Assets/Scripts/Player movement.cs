@@ -96,7 +96,7 @@ public class Playermovement : MonoBehaviour
             currentSpeed = sprintSpeed;
             stamina -= staminaDrain * Time.deltaTime;
         }
-        else
+        else if(stamina < maxStamina)
         {
             stamina += staminaRegen * Time.deltaTime;
         }
@@ -154,7 +154,7 @@ public class Playermovement : MonoBehaviour
 
         Vector3 directionWithoutSpread = targetPoint - aimPivot.position;
 
-        GameObject currentBullet = Instantiate(bulletPrefab, aimPivot.position + directionWithoutSpread, Quaternion.LookRotation(directionWithoutSpread));
+        GameObject currentBullet = Instantiate(bulletPrefab, aimPivot.position, Quaternion.LookRotation(directionWithoutSpread));
     }
 
     public void TakeDamage(float dmg)
