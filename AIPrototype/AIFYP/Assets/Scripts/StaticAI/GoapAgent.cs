@@ -8,12 +8,14 @@ public class GoapAgent : MonoBehaviour
     public GameObject transforms;
     private Transform player;
     public float attackRange = 2f;
+    private Health health;
 
     WorldState world = new();
     GoapPlanner planner = new();
     Queue<GoapAction> currentPlan;
 
     List<GoapAction> actions;
+    private IGoalProvider goalProvider;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,6 +23,8 @@ public class GoapAgent : MonoBehaviour
         actions = new List<GoapAction>(GetComponents<GoapAction>());
         transforms = GameObject.Find("Player");
         player = transforms.transform;
+        goalProvider = GetComponent<IGoalProvider>();
+        health = GetComponent<Health>();
     }
 
     // Update is called once per frame
@@ -41,24 +45,9 @@ public class GoapAgent : MonoBehaviour
 
     void MakePlan()
     {
-        Dictionary<string, bool> goal;
+        if (goalProvider == null) return;
 
-        if (world.Get("playerVisible"))
-        {
-            goal = new Dictionary<string, bool>()
-            {
-                { "playerVisible", true },
-                { "inAttackRange", true }
-            };
-        }
-        else
-        {
-            goal = new Dictionary<string, bool>()
-            {
-                { "isAtPatrolPoint", true }
-            };
-        }
-
+        var goal = goalProvider.GetGoal(world);
         currentPlan = planner.Plan(actions, world.GetStates(), goal);
     }
 
@@ -68,5 +57,14 @@ public class GoapAgent : MonoBehaviour
 
         world.Set("playerVisible", dist < 10f);
         world.Set("inAttackRange", dist < attackRange);
+
+        if (health != null)
+        {
+            world.Set("lowHealth", health.CurrentHealth < health.MaxHealth * 0.41f);
+            world.Set("isDead", health.IsDead);
+        }
+
+        world.Set("lastKnownPlayerPosition", true);
+        world.Set("safePositionReached", false);
     }
 }

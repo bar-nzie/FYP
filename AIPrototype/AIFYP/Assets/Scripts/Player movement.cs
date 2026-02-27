@@ -154,7 +154,7 @@ public class Playermovement : MonoBehaviour
 
         Vector3 directionWithoutSpread = targetPoint - aimPivot.position;
 
-        GameObject currentBullet = Instantiate(bulletPrefab, aimPivot.position, Quaternion.LookRotation(directionWithoutSpread));
+        Instantiate(bulletPrefab, aimPivot.position, Quaternion.LookRotation(directionWithoutSpread));
     }
 
     public void TakeDamage(float dmg)

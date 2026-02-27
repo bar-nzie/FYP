@@ -3,6 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Playermovement playerMovement;
+    private Health enemyHealth;
 
     private void Update()
     {
@@ -14,7 +15,8 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             Debug.Log("Enemy Hit");
-            Destroy(other.gameObject);
+            enemyHealth = other.GetComponent<Health>();
+            enemyHealth.TakeDamage(20f);
         }
         if (other.CompareTag("Player"))
         {
@@ -22,6 +24,7 @@ public class Bullet : MonoBehaviour
             playerMovement = other.GetComponent<Playermovement>();
             playerMovement.TakeDamage(20f);
         }
+        Debug.Log("Collision Detected");
         Destroy(this.gameObject);
     }
 }

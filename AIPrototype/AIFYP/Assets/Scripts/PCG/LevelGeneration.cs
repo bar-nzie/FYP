@@ -11,6 +11,9 @@ public class LevelGeneration : MonoBehaviour
     [SerializeField]
     private NavMeshSurface navMeshSurface;
     public GameObject enemy;
+
+    public MapSearchPoints mapSearchPoints;
+
     void Start()
     {
         GenerateMap();
@@ -23,8 +26,14 @@ public class LevelGeneration : MonoBehaviour
         yield return new WaitForSeconds(3);
 
         navMeshSurface.BuildNavMesh();
+        if (mapSearchPoints != null)
+        {
+            Vector3 tileSize = tilePrefab.GetComponent<MeshRenderer>().bounds.size;
+            mapSearchPoints.GeneratePoints(tileSize.x, tileSize.z, mapWidthInTiles, mapDepthInTiles);
+        }
 
         SpawnEnemies();
+
     }
 
     void GenerateMap()
@@ -50,6 +59,35 @@ public class LevelGeneration : MonoBehaviour
 
     void SpawnEnemies()
     {
-        Instantiate(enemy, new Vector3(115, 10, 115), Quaternion.identity);
+        int enemyCount = 20;
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            Vector3 randomPosition = GetRandomPointOnMap();
+
+            Instantiate(enemy, randomPosition, Quaternion.identity);
+        }
+    }
+
+    Vector3 GetRandomPointOnMap()
+    {
+        float mapWidth = mapWidthInTiles * tilePrefab.GetComponent<MeshRenderer>().bounds.size.x;
+        float mapDepth = mapDepthInTiles * tilePrefab.GetComponent<MeshRenderer>().bounds.size.z;
+
+        float randomX = Random.Range(transform.position.x, transform.position.x + mapWidth);
+        float randomZ = Random.Range(transform.position.z, transform.position.z + mapDepth);
+
+        Vector3 rayStart = new Vector3(randomX, 200f, randomZ); // start high above map
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(rayStart, Vector3.down, out hit, 500f))
+        {
+            Debug.Log("Spawn point found at: " + hit.point);
+            return hit.point + Vector3.up * 1f; // spawn slightly above ground
+        }
+
+        // fallback (shouldn't happen)
+        return new Vector3(randomX, 10f, randomZ);
     }
 }
