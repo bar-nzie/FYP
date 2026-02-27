@@ -15,6 +15,14 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        if (currentHealth < maxHealth)
+        {
+            currentHealth += 1f * Time.deltaTime; // Regenerate health over time
+        }
+    }
+
     public void TakeDamage(float amount)
     {
         currentHealth -= amount;

@@ -26,6 +26,15 @@ public class SearchAction : GoapAction
         if (mapPoints == null || mapPoints.searchPoints.Count == 0)
             return false;
 
+        // **Check if player is visible or in attack range**
+        if (agent.world.Get("playerVisible") || agent.world.Get("inAttackRange"))
+        {
+            // abandon search immediately
+            reached = true;
+            target = Vector3.zero;
+            return true;
+        }
+
         // Pick a new nearby target if we don't have one
         if (target == Vector3.zero)
         {
@@ -33,6 +42,7 @@ public class SearchAction : GoapAction
             reached = false; // reset reached only when a new target is picked
         }
 
+        // Move toward the target
         agent.agent.SetDestination(target);
 
         // Check if AI reached the target

@@ -6,11 +6,12 @@ public class GoapAgent : MonoBehaviour
 {
     public NavMeshAgent agent;
     public GameObject transforms;
-    private Transform player;
+    public Transform player;
+    public Transform Player => player;
     public float attackRange = 2f;
     private Health health;
 
-    WorldState world = new();
+    public WorldState world = new();
     GoapPlanner planner = new();
     Queue<GoapAction> currentPlan;
 
@@ -66,5 +67,6 @@ public class GoapAgent : MonoBehaviour
 
         world.Set("lastKnownPlayerPosition", true);
         world.Set("safePositionReached", false);
+        world.Set("isSafe", false);
     }
 }

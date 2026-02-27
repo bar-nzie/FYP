@@ -42,6 +42,11 @@ public class AdaptiveGoalProvider : MonoBehaviour, IGoalProvider
         {
             goal["isSearching"] = true;     // triggers SearchAction
         }
+        if (world.Get("lowHealth") && world.Get("playerVisible"))
+        {
+            goal["isSafe"] = true; // retreat goal
+            goal["playerVisible"] = true; // attack while retreating
+        }
 
         return goal;
     }
