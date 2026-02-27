@@ -31,10 +31,10 @@ public class AttackState : GoapAction
         shotFired = false;
         agent.agent.ResetPath();
 
-        dir = (agent.transforms.transform.position - transform.position).normalized;
+        dir = (agent.Player.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(dir);
 
-        Debug.DrawLine(transform.position, agent.transforms.transform.position);
+        Debug.DrawLine(transform.position, agent.Player.position);
         Instantiate(bullet, transform.position + dir, Quaternion.LookRotation(dir));
         shotFired = true;
 

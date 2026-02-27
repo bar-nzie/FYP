@@ -18,10 +18,10 @@ GameObject:
   - component: {fileID: -5887783294784119855}
   - component: {fileID: -3469621275378222370}
   - component: {fileID: -4566578205485987948}
-  - component: {fileID: -2303105684934326790}
   - component: {fileID: 7296974373473503539}
   - component: {fileID: -8213826809416891130}
   - component: {fileID: 5399686838298759677}
+  - component: {fileID: -366710292725384471}
   m_Layer: 0
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -133,9 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: -3219861842842196858}
-  transforms: {fileID: 0}
   player: {fileID: 0}
+  health: {fileID: 0}
   attackRange: 5
+  sightRadius: 15
+  peripheralAngle: 90
 --- !u!195 &-3219861842842196858
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -211,19 +213,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 1
   attackRange: 10
---- !u!114 &-2303105684934326790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1191950389481190254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ef7102d4a884964aad86472b7f16f99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cost: 1
 --- !u!114 &7296974373473503539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,3 +255,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sampleRadius: 10
   sampleCount: 20
+--- !u!114 &-366710292725384471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191950389481190254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250463cea88b5584a9ff7d7bd50bbcfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 1
+  sneakSpeed: 3
+  chaseSpeed: 7
+  flankDistance: 2

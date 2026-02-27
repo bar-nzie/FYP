@@ -15,12 +15,12 @@ public class ChaseAction : GoapAction
     public override bool Perform(GoapAgent agent)
     {
         agentRef = agent;
-        agent.agent.SetDestination(agent.transforms.transform.position);
+        agent.agent.SetDestination(agent.Player.position);
         return true;
     }
 
     public override bool IsDone()
     {
-        return Vector3.Distance(transform.position, agentRef.transforms.transform.position) < agentRef.attackRange;
+        return Vector3.Distance(transform.position, agentRef.Player.position) < agentRef.attackRange;
     }
 }
