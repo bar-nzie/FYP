@@ -10,6 +10,7 @@ public class AttackState : GoapAction
     bool shotFired = false;
     public float fireRate = 1f;
     private float lastShotTime = -10f;
+    AIAnimationController animController;
 
     private void Awake()
     {
@@ -31,11 +32,15 @@ public class AttackState : GoapAction
         shotFired = false;
         agent.agent.ResetPath();
 
+        if (animController == null)
+            animController = agent.GetComponent<AIAnimationController>();
+
         dir = (agent.Player.position - transform.position).normalized;
         transform.rotation = Quaternion.LookRotation(dir);
 
         Debug.DrawLine(transform.position, agent.Player.position);
         Instantiate(bullet, transform.position + dir, Quaternion.LookRotation(dir));
+        animController.SetBool();
         shotFired = true;
 
         return true;

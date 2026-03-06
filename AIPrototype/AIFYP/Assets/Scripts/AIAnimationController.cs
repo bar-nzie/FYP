@@ -31,6 +31,7 @@ public class AIAnimationController : MonoBehaviour
         float normalizedSpeed = Mathf.Clamp01(speed / agent.speed); // 0 = idle, 1 = full speed
 
         animator.SetFloat("MoveSpeed", normalizedSpeed, 0.1f, Time.deltaTime); // smooth blend
+        //animator.SetBool("IsAttacking", false);
 
     }
 
@@ -62,5 +63,10 @@ public class AIAnimationController : MonoBehaviour
             // Stop turning if not moving
             animator.SetInteger("TurnDirection", 0);
         }
+    }
+
+    public void SetBool()
+    {
+        animator.SetBool("IsAttacking", true);
     }
 }

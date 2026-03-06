@@ -10,8 +10,8 @@ public class GoapAgent : MonoBehaviour
     public Health health;
 
     [Header("Settings")]
-    public float attackRange = 2f;
-    public float sightRadius = 20f;     // how far AI can detect the player
+    public float attackRange = 10f;
+    public float sightRadius = 30f;     // how far AI can detect the player
     public float peripheralAngle = 90f; // FOV half-angle for player awareness
 
     // World state

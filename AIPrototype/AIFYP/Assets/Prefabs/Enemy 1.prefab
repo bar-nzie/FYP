@@ -138,8 +138,8 @@ MonoBehaviour:
   agent: {fileID: -3219861842842196858}
   player: {fileID: 0}
   health: {fileID: 0}
-  attackRange: 5
-  sightRadius: 15
+  attackRange: 10
+  sightRadius: 30
   peripheralAngle: 90
 --- !u!195 &-3219861842842196858
 NavMeshAgent:
@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost: 1
   bullet: {fileID: 4500334078204774071, guid: b6546158e08a0c44bad55f20d5cc8584, type: 3}
-  fireRate: 0.25
+  fireRate: 1
 --- !u!114 &-8213826809416891130
 MonoBehaviour:
   m_ObjectHideFlags: 0

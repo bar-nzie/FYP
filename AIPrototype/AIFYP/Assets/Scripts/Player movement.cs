@@ -29,6 +29,7 @@ public class Playermovement : MonoBehaviour
     [Header("Health")]
     public float maxHealth = 100f;
     public float currentHealth;
+    public Image healthFill;
 
     [Header("Attack")]
     public Transform aimPivot;
@@ -160,5 +161,6 @@ public class Playermovement : MonoBehaviour
     public void TakeDamage(float dmg)
     {
         currentHealth -= dmg;
+        healthFill.fillAmount = currentHealth / maxHealth;
     }
 }
