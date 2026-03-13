@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 public class Playermovement : MonoBehaviour
 {
@@ -35,6 +36,12 @@ public class Playermovement : MonoBehaviour
     public Transform aimPivot;
     public GameObject bulletPrefab;
     public Camera playerCam;
+
+    [Header("Objectives")]
+    public TMP_Text enemies;
+    public TMP_Text coins;
+    int enemiesKilled = 0;
+    int coinsCollected = 0;
 
     private bool isSprinting;
 
@@ -162,5 +169,14 @@ public class Playermovement : MonoBehaviour
     {
         currentHealth -= dmg;
         healthFill.fillAmount = currentHealth / maxHealth;
+    }
+
+    public void Objectives(bool isEnemy)
+    {
+        if (isEnemy)
+        {
+            enemiesKilled++;
+            enemies.text = "Kill Enemies " + enemiesKilled.ToString() + "/20";
+        }
     }
 }
