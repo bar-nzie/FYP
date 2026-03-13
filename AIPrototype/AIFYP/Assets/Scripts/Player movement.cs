@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Playermovement : MonoBehaviour
 {
@@ -84,7 +85,8 @@ public class Playermovement : MonoBehaviour
         UpdateUI();
         if(currentHealth <= 0f)
         {
-            Destroy(this.gameObject);
+            SceneManager.LoadScene("StartMenu");
+            Destroy(gameObject);
         }
         if (inputActions.Player.Attack.WasPressedThisFrame())
         {
